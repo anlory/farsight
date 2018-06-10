@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define SIZE 10
+
+int main(int argc,char **argv)
+{
+      FILE *read_fp,*write_fp;
+      char str[SIZE];
+
+      if(argc != 3){
+	    fprintf(stderr,"Usage:%s <src_path_name> <des_path_name>\n",argv[0]);
+	    exit(1);
+      }
+      read_fp = fopen(argv[1],"r");
+      if(read_fp == NULL){
+	    perror("fopen");
+	    exit(1);
+      }
+      if( (write_fp = fopen(argv[2],"w")) ==NULL){
+	    perror("fopen");
+	    exit(1);
+      }
+
+      //拷贝文件
+#if 1
+      while(fgets(str,SIZE,read_fp) != NULL){
+	    printf("%s",str);
+	    fputs(str,write_fp);
+      }
+#else
+      while(fgets(str,SIZE,stdin) != NULL)
+	    printf("%s(%d)",str,strlen(str));
+#endif	    
+
+     return 0;
+}
